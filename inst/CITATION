@@ -1,0 +1,25 @@
+citHeader("To cite package 'CAVIAR' in publications use:")
+
+desc <- packageDescription("CAVIAR")
+year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", desc$Date)
+vers <- paste("R package version", desc$Version)
+
+citEntry(entry="Manual",
+         title = "CAVIAR: cambial activity and wood formation - data manipulation, visualisation and analysis using R",
+         author = personList(as.person("Cyrille B. K. Rathgeber")),
+         year = year,
+         note = vers,
+         textVersion = paste("Cyrille B. K. Rathgeber (", year, ") Cambial activity and wood formation: data manipulation, visualisation and analysis using R. ", vers, ".", sep="")
+	)
+
+citEntry(entry="Article",
+         title        = "Phenology of wood formation: data processing, analysis and visualisation using R (CAVIAR package)",
+         author       = "Rathgeber C.B.K., Longuetaud F., Mothe F., Cuny H. & Le Moguedec G.",
+         year         = "In Press",
+         journal      = "Dendrochronologia",
+         volume       = "xx",
+         pages        = "xxx-xxx",
+         textVersion = paste("Rathgeber C.B.K., Longuetaud F., Mothe F., Cuny H. & Le Moguedec G. Phenology of wood formation: data 			processing, analysis and visualisation using R (package CAVIAR). Accepted in Dendrochronologia.")
+         )
+
+citFooter("We have invested a lot of time and effort in creating this package so please cite it properly when using it for data processing, visualisation or analysis.")

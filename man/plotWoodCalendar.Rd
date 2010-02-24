@@ -38,7 +38,7 @@ A data frame of the critical dates and durations median and median absolute devi
 
 \note{
 Version: 4.0 \cr
-Last modifications: 11 February 2010
+Last modifications: 19 July 2010
 }
 
 \author{
@@ -47,11 +47,11 @@ Email: \email{cyrille.rathgeber@nancy.inra.fr}
 }
 
 \references{
-Rathgeber C.B.K., Longuetaud F. , Mothe F., Cuny H., Le Moguedec G. 2010. Phenology of wood formation: data processing, analysis and visualisation using R. Accepted in Dendrochronologia.
+Rathgeber C.B.K., Longuetaud F. , Mothe F., Cuny H., Le Moguedec G. 2010. Phenology of wood formation: data processing, analysis and visualisation using R. Accepted in \emph{Dendrochronologia}.
 }
 
 \seealso{
-\code{\link{CAVIAR-package}}, \code{\link{computeBootstrapTest}} and \code{\link{computeCriticalDates}}
+\code{\link{AMA2006}, \link{averageRF}, \link{computeBootstrapTest}, \link{computeCriticalDates}, \link{computeRCN}, \link{fitGompertz}}
 }
 
 \examples{

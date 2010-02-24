@@ -1,12 +1,20 @@
 # **************************************************************************************
+# FUNCTION computeCriticalDates
+# -----------------------------
+#
 # Author: Cyrille RATHGEBER - LERFoB UMR1092 - INRA Nancy
-# Date: 21 Octobre 2009, 4 Novembre 2009, 29 January 2010, 1, 5 & 11 February 2010
-# Purpose: Extracting wood formation phenology critical dates
+# Purpose: Computing wood formation phenology critical dates
 # Version:
 #		1. Linear interpolation
 #		2. Binary transformation of input data
 #		3. Logistic regression
 #		4. Confidence interval computation
+#			4.1. Values in plain active phase forced to 1
+#				4.1-1. Bug concerning plot subtitle corrected
+#
+# Started: 21 October 2009
+# Last modified: 25 March 2010
+#
 # **************************************************************************************
 
 
@@ -25,11 +33,12 @@ computeCriticalDates <- function(data, plot=TRUE) {
  #		dataframe of critical dates and duration with associated 95% CI
  #		optional pdf file with the plots
  #
+ #
  # *************************************************************************************
 
 	# General settings for the plots
 	# ------------------------------
-	pdfName <- paste("Critical dates computation report - v4.0 - ", Sys.Date(), ".pdf", sep="")
+	pdfName <- paste("Critical dates computation report - v4.1 - ", Sys.Date(), ".pdf", sep="")
 	pdf(file=pdfName)
 
 	# Transforming the raw data frame into a binary data frame
@@ -97,6 +106,11 @@ computeCriticalDates <- function(data, plot=TRUE) {
 		# spliting dataset
 		EDF.b <- BDF[BDF$DY <= datE2, c("DY", "E")]
 		EDF.c <- BDF[BDF$DY >= datE1, c("DY", "E")]
+		
+		# Forcing plain active phase values to 1
+		# --> in order to ensure that begining and end are correctly computed!
+		EDF.b[EDF.b$DY >= datE1, "E"] <- 1
+		EDF.c[EDF.c$DY <= datE2, "E"] <- 1
 
 		# looking for the beginning using a logistic regression
 		DY <- EDF.b$DY
@@ -124,9 +138,9 @@ computeCriticalDates <- function(data, plot=TRUE) {
 
 			# Writting additionnal labels on the plot
 			title(paste("Tree", t, " - bE"))
+			mtext(paste("bE = ", bE[i], " +/- ", bE.sd[i], "days"), side=3, line=0.5, adj=0)
 			mtext("Day of Year", side=1, line=2)
 			mtext("Probability", side=2, line=2)
-			mtext(paste("bE = ", bE, " +/- ", bE.sd, "days"), side=3, line=0.5, adj=0)
 		}
 
 		# looking for the end using a logistic regression
@@ -154,9 +168,9 @@ computeCriticalDates <- function(data, plot=TRUE) {
 
 			# Writting additionnal labels on the plot
 			title(paste("Tree", t, " - cE"))
+			mtext(paste("cE = ", cE[i], " +/- ", cE.sd[i], "days"), side=3, line=0.5, adj=0)
 			mtext("Day of Year", side=1, line=2)
 			mtext("Radial file ratio", side=2, line=2)
-			mtext(paste("cE = ", cE, " +/- ", cE.sd, "days"), side=3, line=0.5, adj=0)
 		}
 
 
@@ -170,6 +184,11 @@ computeCriticalDates <- function(data, plot=TRUE) {
 		# spliting dataset
 		LDF.b <- BDF[BDF$DY <= datL2, c("DY", "L")]
 		LDF.c <- BDF[BDF$DY >= datL1, c("DY", "L")]
+		
+		# Forcing plain active phase values to 1
+		# --> in order to ensure that begining and end are correctly computed!
+		LDF.b[LDF.b$DY >= datL1, "L"] <- 1
+		LDF.c[LDF.c$DY <= datL2, "L"] <- 1
 
 		# looking for the beginning using a logistic regression
 		DY <- LDF.b$DY
@@ -196,9 +215,9 @@ computeCriticalDates <- function(data, plot=TRUE) {
 
 			# Writting additionnal labels on the plot
 			title(paste("Tree", t, " - bL"))
+			mtext(paste("bL = ", bL[i], " +/- ", bL.sd[i], "days"), side=3, line=0.5, adj=0)
 			mtext("Day of Year", side=1, line=2)
 			mtext("Radial file ratio", side=2, line=2)
-			mtext(paste("bL = ", bL, " +/- ", bL.sd, "days"), side=3, line=0.5, adj=0)
 		}
 
 
@@ -227,9 +246,9 @@ computeCriticalDates <- function(data, plot=TRUE) {
 
 			# Writting additionnal labels on the plot
 			title(paste("Tree", t, " - cL"))
+			mtext(paste("cL = ", cL[i], " +/- ", cL.sd[i], "days"), side=3, line=0.5, adj=0)
 			mtext("Day of Year", side=1, line=2)
 			mtext("Radial file ratio", side=2, line=2)
-			mtext(paste("cL = ", cL, " +/- ", cL.sd, "days"), side=3, line=0.5, adj=0)
 		}
 
 
@@ -263,9 +282,9 @@ computeCriticalDates <- function(data, plot=TRUE) {
 
 			# Writting additionnal labels on the plot
 			title(paste("Tree", t, " - bM"))
+			mtext(paste("bM = ", bM[i], " +/- ", bM.sd[i], "days"), side=3, line=0.5, adj=0)
 			mtext("Day of Year", side=1, line=2)
 			mtext("Radial file ratio", side=2, line=2)
-			mtext(paste("bM = ", bM, " +/- ", bM.sd, "days"), side=3, line=0.5, adj=0)
 		}
 	}
 

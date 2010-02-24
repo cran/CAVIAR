@@ -13,7 +13,7 @@ computeCriticalDates(data, plot=TRUE)
 
 
 \arguments{
-  \item{data}{a data frame containing cell count data. This data frame must contain at least 7 imposed columns with compulsory names: Tree, DY, RF, nC, nE, nL, nM (see AMA2006)}
+  \item{data}{a data frame containing cell count data. This data frame must contain at least 7 imposed columns with compulsory names: Tree, DY, RF, nC, nE, nL, nM (see \code{\link{AMA2006}})}
   \item{plot}{an optional logical indicating if a PDF plot must be outputted or not (default=TRUE)}
 }
 
@@ -31,7 +31,7 @@ This data frame is composed of 5 columns for the critical dates, which are the b
 
 \note{
 Version: 4.0 \cr
-Last modifications: 11 February 2010
+Last modifications: 19 July 2010
 }
 
 \author{
@@ -40,11 +40,11 @@ Email: \email{cyrille.rathgeber@nancy.inra.fr}
 }
 
 \references{
-Rathgeber C.B.K., Longuetaud F. , Mothe F., Cuny H., Le Moguedec G. 2010. Phenology of wood formation: data processing, analysis and visualisation using R. Accepted in Dendrochronologia.
+Rathgeber C.B.K., Longuetaud F. , Mothe F., Cuny H., Le Moguedec G. 2010. Phenology of wood formation: data processing, analysis and visualisation using R. Accepted in \emph{Dendrochronologia}.
 }
 
 \seealso{
-\code{\link{CAVIAR-package}}, \code{\link{computeBootstrapTest}} and \code{\link{plotWoodCalendar}}
+\code{\link{AMA2006}, \link{averageRF}, \link{computeBootstrapTest}, \link{computeRCN}, \link{fitGompertz}, \link{plotWoodCalendar}}
 }
 
 \examples{

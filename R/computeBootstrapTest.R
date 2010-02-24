@@ -60,6 +60,12 @@ computeBootstrapTest <- function(y, z, y.sd=NA, z.sd=NA, stat="median", centring
 		factorial(n) / (factorial(p) * factorial(n - p))
 	}
 	
+	
+	# Removing missing values from x and y
+	# ------------------------------------
+	y <- y[is.na(y)==FALSE]	
+	z <- z[is.na(z)==FALSE]
+	
 	# Constructing the common dataset
 	# -------------------------------	
 	x <- c(y, z)
