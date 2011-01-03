@@ -1,14 +1,14 @@
-\name{plotWoodCalendar}
-\alias{plotWoodCalendar}
+\name{plotWoodFormationCalendar}
+\alias{plotWoodFormationCalendar}
 
-\title{plotWoodCalendar}
+\title{plotWoodFormationCalendar}
 
 \description{
 Plots wood formation calendar
 }
 
 \usage{
-plotWoodCalendar(data, xmin = NA, xmax = NA, title = " ", subtitle = " ", plotype = 4)
+plotWoodFormationCalendar(data, xmin = NA, xmax = NA, title = " ", subtitle = " ", plotype = 4)
 }
 
 \arguments{
@@ -51,7 +51,7 @@ Rathgeber C.B.K., Longuetaud F. , Mothe F., Cuny H., Le Moguedec G. 2010. Phenol
 }
 
 \seealso{
-\code{\link{AMA2006}, \link{averageRF}, \link{computeBootstrapTest}, \link{computeCriticalDates}, \link{computeRCN}, \link{fitGompertz}}
+\code{\link{AMA2006}, \link{averageRadialFiles}, \link{computeBootstrapTest}, \link{computeCriticalDates}, \link{computeRingCellNb}, \link{readXLSCellCountTable}, \link{fitGompertz}, \link{plotWoodFormationDynamics}}
 }
 
 \examples{
@@ -63,15 +63,15 @@ Fir.cdd <- computeCriticalDates(AMA2006[AMA2006$Sp=="ABAL", ])
 Pine.cdd <- computeCriticalDates(AMA2006[AMA2006$Sp=="PISY", ])
 
 # Computing medians and medians absolute deviation for firs critical dates and durations
-Fir.medians <- plotWoodCalendar(Fir.cdd)
+Fir.medians <- plotWoodFormationCalendar(Fir.cdd)
 
 ## Visualising wood formation critical dates and durations on the screen for firs:
 # Dates by trees individually
-plotWoodCalendar(Fir.cdd, plotype=1)
+plotWoodFormationCalendar(Fir.cdd, plotype=1)
 # Dates by group of trees
-plotWoodCalendar(Fir.cdd, plotype=2)
+plotWoodFormationCalendar(Fir.cdd, plotype=2)
 # Duration by group of trees
-plotWoodCalendar(Fir.cdd, plotype=3)
+plotWoodFormationCalendar(Fir.cdd, plotype=3)
 
 ## Plotting wood formation calendar for firs and pines in a PDF file
 # General settings
@@ -80,16 +80,16 @@ layout(matrix(c(1, 2, 3, 4), nrow=2, ncol=2, byrow=TRUE))
 par(mar=c(4, 4, 4, 1))
 
 # Drawing the first plot - Firs critical dates
-plotWoodCalendar(Fir.cdd, xmin=100, xmax=305, subtitle="a. Fir critical dates", plotype=2)
+plotWoodFormationCalendar(Fir.cdd, xmin=100, xmax=305, subtitle="a. Fir critical dates", plotype=2)
 
 # Drawing the second plot - Firs critical durations
-plotWoodCalendar(Fir.cdd, xmax=210, subtitle="b. Fir critical durations", plotype=3)
+plotWoodFormationCalendar(Fir.cdd, xmax=210, subtitle="b. Fir critical durations", plotype=3)
 
 # Drawing the third plot - Pines critical dates
-plotWoodCalendar(Pine.cdd, xmin=100, xmax=305, subtitle="c. Pine critical dates", plotype=2)
+plotWoodFormationCalendar(Pine.cdd, xmin=100, xmax=305, subtitle="c. Pine critical dates", plotype=2)
 
 # Drawing the fourth plot - Pines critical durations
-plotWoodCalendar(Pine.cdd, xmax=210, subtitle="d. Pine critical durations", plotype=3)
+plotWoodFormationCalendar(Pine.cdd, xmax=210, subtitle="d. Pine critical durations", plotype=3)
 
 dev.off()
 }

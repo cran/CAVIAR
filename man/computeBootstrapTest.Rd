@@ -71,7 +71,7 @@ Rathgeber C.B.K., Longuetaud F. , Mothe F., Cuny H., Le Moguedec G. 2010. Phenol
 }
 
 \seealso{
-\code{\link{AMA2006}, \link{averageRF}, \link{computeCriticalDates}, \link{computeRCN}, \link{fitGompertz}, \link{plotWoodCalendar}}
+\code{\link{AMA2006}, \link{averageRadialFiles}, \link{computeCriticalDates}, \link{computeRingCellNb}, \link{readXLSCellCountTable}, \link{fitGompertz}, \link{plotWoodFormationCalendar}, \link{plotWoodFormationDynamics}}
 }
 
 \examples{

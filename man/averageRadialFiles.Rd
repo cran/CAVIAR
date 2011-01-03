@@ -1,15 +1,15 @@
-\name{averageRF}
+\name{averageRadialFiles}
 
-\alias{averageRF}
+\alias{averageRadialFiles}
 
-\title{averageRF}
+\title{averageRadialFiles}
 
 \description{
 Average raw radial file data to compute mean cell numbers by trees
 }
 
 \usage{
-averageRF(data)
+averageRadialFiles(data)
 }
 
 
@@ -28,7 +28,7 @@ A data frame of at least 8 columns containing the computed values: Tree, DY, nC,
 
 \note{
 Version: 1.0-0 \cr
-Development started: 27 November 2008
+Development started: 27 November 2008 \cr
 Last modifications: 19 July 2010
 }
 
@@ -42,7 +42,7 @@ Email: \email{cyrille.rathgeber@nancy.inra.fr}
 }
 
 \seealso{
-\code{\link{AMA2006}, \link{computeBootstrapTest}, \link{computeCriticalDates}, \link{computeRCN}, \link{fitGompertz}, \link{plotWoodCalendar}}
+\code{\link{AMA2006}, \link{computeBootstrapTest}, \link{computeCriticalDates}, \link{computeRingCellNb}, \link{readXLSCellCountTable}, \link{fitGompertz}, \link{plotWoodFormationCalendar}, \link{plotWoodFormationDynamics}}
 }
 
 \examples{
@@ -50,7 +50,7 @@ Email: \email{cyrille.rathgeber@nancy.inra.fr}
 data(AMA2006)
 
 ## Averaging raw data:
-AMA2006.mean <- averageRF(AMA2006)
+AMA2006.mean <- averageRadialFiles(AMA2006)
 }
 
 \keyword{datagen}

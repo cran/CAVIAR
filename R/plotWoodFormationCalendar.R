@@ -1,28 +1,19 @@
-# **********************************************************************************************
-# Cyrille RATHGEBER - INRA Nancy - 07 juillet 2009, 09 & 11 February 2010
-# Purpose -> Visualization of wood formation calendar
-# Version 4.0
-# 		1. plot individual critical dates
-#		2. plot group critical dates
-#		3. plot group phases durations
-#		4. Compute median and inter-quartile range
-# **********************************************************************************************
 
+plotWoodFormationCalendar <- function(data, xmin=NA, xmax=NA, title=" ", subtitle=" ", plotype=4) {
 
-plotWoodCalendar <- function(data, xmin=NA, xmax=NA, title=" ", subtitle=" ", plotype=4) {
  # *********************************************************************************************
- # plotCalendar() function definition
- # ----------------------------------
+ # plotWoodFormationCalendar() function definition
+ # -----------------------------------------------
  #
  # Drawing function for plotting wood formation calendar
  # 
  # Arguments:
- # 		- data: data frame with imposed column names, typically output from computeCriticalDates()
+ # 		- data: data.frame with imposed column names, typically output from computeCriticalDates()
  #			function
  #		- xmin (optional): x-axis min value
  #		- xmax (optional): x-axis max value
  #		- title (optional): plot tittle
- #		- title (optional): plot subtittle
+ #		- subtitle (optional): plot subtittle
  #		- plotype (optional): 	type 1 --> individual critical dates plot
  #									type 2 --> goup critical dates plot
  #									type 3 --> goup critical duration plot
@@ -31,6 +22,15 @@ plotWoodCalendar <- function(data, xmin=NA, xmax=NA, title=" ", subtitle=" ", pl
  # Output:
  #		- plot
  #		- dataframe of the median and median absolute deviation
+ # 
+ # Version 4.0
+ # 		1. plot individual critical dates
+ #		2. plot group critical dates
+ #		3. plot group phases durations
+ #		4. Compute median and inter-quartile range
+ # Started: 7 Juillet 2009
+ # Last modifications: 11 February 2010
+ # Author: Cyrille RATHGEBER - INRA Nancy
  #
  # *********************************************************************************************
 	

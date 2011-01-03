@@ -13,8 +13,8 @@ Process, analyses and plots data from cambial activity and wood formation monito
 \tabular{ll}{
 Package: \tab CAVIAR \cr
 Type: \tab Package \cr
-Version: \tab 1.1-0 \cr
-Date: \tab 2010-02-24 \cr
+Version: \tab 1.3-1 \cr
+Date: \tab 2010-10-22 \cr
 License: \tab GPL (>= 2) \cr
 LazyLoad: \tab yes \cr
 URL: \tab \url{http://www.nancy.inra.fr/foret_bois_lerfob/personnels_de_l_umr/scientifiques/rathgeber_cyrille}
@@ -36,28 +36,15 @@ Rathgeber C.B.K., Longuetaud F., Mothe F., Cuny H., Le Moguedec G. 2010. Phenolo
 }
 
 \seealso{
-\code{\link{AMA2006}, \link{averageRF}, \link{computeBootstrapTest}, \link{computeCriticalDates}, \link{computeRCN}, \link{fitGompertz}, \link{plotWoodCalendar}}
+\code{\link{AMA2006}, \link{averageRadialFiles}, \link{computeBootstrapTest}, \link{computeCriticalDates}, \link{computeRingCellNb}, \link{readXLSCellCountTable}, \link{fitGompertz}, \link{plotWoodFormationCalendar}, \link{plotWoodFormationDynamics}}
 }
 
 \note{
 Development started: 27 Novembre 2008
-Last modifications: 19 July 2010
+Last modifications: 06 Decembre 2010
 }
 
-\examples{
-# Loading the example dataset:
-data(AMA2006)
-
-# Computing wood formation critical dates for firs and pines:
-Fir.cdd <- computeCriticalDates(AMA2006[AMA2006$Sp=="ABAL", ])
-Pine.cdd <- computeCriticalDates(AMA2006[AMA2006$Sp=="PISY", ])
-
-# Visualising wood formation critical dates and durations on the screen for firs:
-plotWoodCalendar(Fir.cdd, plotype=4)
-
-# Testing if pines start xylogenesis before firs
-computeBootstrapTest(Fir.cdd$bE, Pine.cdd$bE)
-}
+\examples{}
 
 \keyword{package}
 

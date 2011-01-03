@@ -1,15 +1,15 @@
-\name{computeRCN}
+\name{computeRingCellNb}
 
-\alias{computeRCN}
+\alias{computeRingCellNb}
 
-\title{computeRCN}
+\title{computeRingCellNb}
 
 \description{
 Computes characteristic ring cell numbers
 }
 
 \usage{
-computeRCN(data, stat="median")
+computeRingCellNb(data, stat="median")
 }
 
 
@@ -28,8 +28,9 @@ A data frame of 6 columns containing the computed characteristic tree ring cell 
 }
 
 \note{
-Version: 1.0 \cr
-Last modifications: 19 July 2010
+Started: 25 March 2010 \cr
+Last modifications: 3 Decembre 2010
+Current version: 1.2 \cr
 }
 
 \author{
@@ -42,7 +43,7 @@ Rathgeber C.B.K., Rossi S. , Bontemps J.-D., Longuetaud F. Influence of social s
 }
 
 \seealso{
-\code{\link{AMA2006}, \link{averageRF}, \link{computeBootstrapTest}, \link{computeCriticalDates}, \link{fitGompertz}, \link{plotWoodCalendar}}
+\code{\link{AMA2006}, \link{averageRadialFiles}, \link{computeBootstrapTest}, \link{computeCriticalDates}, \link{readXLSCellCountTable}, \link{fitGompertz}, \link{plotWoodFormationCalendar}, \link{plotWoodFormationDynamics}}
 }
 
 \examples{
@@ -50,8 +51,8 @@ Rathgeber C.B.K., Rossi S. , Bontemps J.-D., Longuetaud F. Influence of social s
 data(AMA2006)
 
 ## Computing characteristic ring cell numbers for firs and pines:
-Fir.RCN <- computeRCN(AMA2006[AMA2006$Sp=="ABAL", ])
-Pine.RCN <- computeRCN(AMA2006[AMA2006$Sp=="PISY", ])
+Fir.RCN <- computeRingCellNb(AMA2006[AMA2006$Sp=="ABAL", ])
+Pine.RCN <- computeRingCellNb(AMA2006[AMA2006$Sp=="PISY", ])
 }
 
 \keyword{datagen}
