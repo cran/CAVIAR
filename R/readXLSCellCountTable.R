@@ -1,24 +1,39 @@
-readXLSCellCountTable <- function(xls.file.name, sheets, sampling.dates, index) {
+# **************************************************************************************
+# FUNCTION readXLSCellCountTable
+# ------------------------------
+#
+# Author: Cyrille RATHGEBER - LERFoB UMR1092 - INRA Nancy
+# Purpose: Reading Excel spreadsheets and collecting them in a database-like data.frame
+# Version:
+#  	1.1. Using data
+#	1.2. Taking into account previous ring measurement
+#	1.3. Adding the year if asked (optional)
+#   	1.4-1. Removing the year option and correcting a bug concerning P
+#
+# Started: 13 Octobre 2010
+# Last modified: 11 January 2012
+#
+# **************************************************************************************
+
+
+readXLSCellCountTable <- function(xls.file.name, sheets, sampling.dates, tree.names) {
 
  # *******************************************************************************************************
  # readXLSCellCountTable() function definition
  # -------------------------------------------
  #
- # Data manipulation function for converting Excel spreadsheet file to database-like text file
+ # Data manipulation function for converting Excel spreadsheet file to database-like data.frame
  # 
  # Arguments:
  # 		- xls.file.name: a character containing the path to the Excel file
  #		- sheets: a vector containing the numbers of the sheet to be read
- #		- sampling.dates: a data.frame containing the correspondence between sampling numbers and dates (in DOY)
- #		- index: a vector containing the names of the trees
+ #		- sampling.dates: a data.frame containing the correspondence between sampling numbers
+ #			and dates (in DOY)
+ #		- tree.names: a vector containing the names of the trees
  #
  # Output:
  #		- a data.frame in database-like format
  #
- # Version: 1.1-2
- # Started: 13 Octobre 2010
- # Last modifications: 4 January 2011
- # Author: Cyrille RATHGEBER - INRA Nancy
  #
  # *******************************************************************************************************
 	
@@ -46,7 +61,7 @@ readXLSCellCountTable <- function(xls.file.name, sheets, sampling.dates, index) 
 			IDF <- merge(sampling.dates, InDF)
 
 			# Creating a "database-type" data.frame
-			Index <- as.factor(rep.int(index[i], 3*nrow(IDF)))
+			Tree <- as.factor(rep.int(tree.names[i], 3*nrow(IDF)))
 			Sample <- as.factor(rep.int(IDF$Sample, 3))
 			DY <- as.integer(rep.int(IDF$DY, 3))
 			RF <- as.factor(c(rep.int(1, nrow(IDF)), rep.int(2, nrow(IDF)), rep.int(3, nrow(IDF))))
@@ -55,8 +70,8 @@ readXLSCellCountTable <- function(xls.file.name, sheets, sampling.dates, index) 
 			nL <- as.integer(c(IDF$L1, IDF$L2, IDF$L3))
 			nM <- as.integer(c(IDF$M1, IDF$M2, IDF$M3))
 
-			aDF <- data.frame(Index, Sample, DY, RF, nC, nE, nL, nM)
-	
+			aDF <- data.frame(Tree, Sample, DY, RF, nC, nE, nL, nM)
+
 			# Ordering the final table
 			bDF <- aDF[order(aDF$Sample), ]
 	
@@ -79,8 +94,8 @@ readXLSCellCountTable <- function(xls.file.name, sheets, sampling.dates, index) 
 	} # End if
 	
 
-	# Case 2: cell count table countaining previous ring counting
-	# -----------------------------------------------------------
+	# Case 2: cell count table with previous ring counting
+	# ----------------------------------------------------
 
 	if (is.na(match("P1", N)) == FALSE) {
 
@@ -93,7 +108,7 @@ readXLSCellCountTable <- function(xls.file.name, sheets, sampling.dates, index) 
 			IDF <- merge(sampling.dates, InDF)
 
 			# Creating a "database-type" data.frame
-			Index <- as.factor(rep.int(index[i], 3*nrow(IDF)))
+			Tree <- as.factor(rep.int(tree.names[i], 3*nrow(IDF)))
 			Sample <- as.factor(rep.int(IDF$Sample, 3))
 			DY <- as.integer(rep.int(IDF$DY, 3))
 			RF <- as.factor(c(rep.int(1, nrow(IDF)), rep.int(2, nrow(IDF)), rep.int(3, nrow(IDF))))
@@ -101,9 +116,9 @@ readXLSCellCountTable <- function(xls.file.name, sheets, sampling.dates, index) 
 			nE <- as.integer(c(IDF$E1, IDF$E2, IDF$E3))
 			nL <- as.integer(c(IDF$L1, IDF$L2, IDF$L3))
 			nM <- as.integer(c(IDF$M1, IDF$M2, IDF$M3))
-			nP <- as.integer(c(IDF$P1, IDF$P2, IDF$P3))
+			P <- as.numeric(c(IDF$P1, IDF$P2, IDF$P3))
 
-			aDF <- data.frame(Index, Sample, DY, RF, nC, nE, nL, nM, nP)
+			aDF <- data.frame(Tree, Sample, DY, RF, nC, nE, nL, nM, P)
 	
 			# Ordering the final table
 			bDF <- aDF[order(aDF$Sample), ]

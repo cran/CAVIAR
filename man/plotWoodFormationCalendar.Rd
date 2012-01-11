@@ -8,15 +8,14 @@ Plots wood formation calendar
 }
 
 \usage{
-plotWoodFormationCalendar(data, xmin = NA, xmax = NA, title = " ", subtitle = " ", plotype = 4)
+plotWoodFormationCalendar(data, main = " ", sub = " ", xlim=NULL, plotype = 4)
 }
 
 \arguments{
   \item{data}{a data frame of critical dates and durations with 8 compulsory columns located by their names (bE, bL, bM, cE, cL, dE, dL, dX), typically output from \code{\link{computeCriticalDates}} function}
-  \item{xmin}{an optional numeric indicating the x-axis minimum value}
-  \item{xmax}{an optional numeric indicating the x-axis maximum value}
-  \item{title}{an optional character containing the plot title}
-  \item{subtitle}{an optional character containing the plot subtitle}
+  \item{main}{an optional character containing the plot title}
+  \item{sub}{an optional character containing the plot subtitle}
+  \item{xlim}{an optional vector indicating the x-axis minimum and maximum values}
   \item{plotype}{an optional integer indicating the type of plot
 	1: individual critical dates plot,\cr
 	2: group critical dates plot,\cr
@@ -37,8 +36,8 @@ A data frame of the critical dates and durations median and median absolute devi
 }
 
 \note{
-Version: 4.0 \cr
-Last modifications: 19 July 2010
+Version: 4.1 \cr
+Last modifications: 03 January 2011
 }
 
 \author{
@@ -47,19 +46,19 @@ Email: \email{cyrille.rathgeber@nancy.inra.fr}
 }
 
 \references{
-Rathgeber C.B.K., Longuetaud F. , Mothe F., Cuny H., Le Moguedec G. 2010. Phenology of wood formation: data processing, analysis and visualisation using R. Accepted in \emph{Dendrochronologia}.
+Rathgeber C.B.K., Longuetaud F., Mothe F., Cuny H. & Le Moguedec G. 2011. Phenology of wood formation: Data processing, analysis and visualisation using R (Package CAVIAR).  \emph{Dendrochronologia} \bold{29}: 139-149. \cr
 }
 
 \seealso{
-\code{\link{AMA2006}, \link{averageRadialFiles}, \link{computeBootstrapTest}, \link{computeCriticalDates}, \link{computeRingCellNb}, \link{readXLSCellCountTable}, \link{fitGompertz}, \link{plotWoodFormationDynamics}}
+\code{\link{AMA2006}, \link{averageRadialFiles}, \link{computeBootstrapTest}, \link{computeCriticalDates}, \link{computeRingCellNb}, \link{readXLSCellCountTable}, \link{fitGompertz}, \link{plotWoodFormationDynamics}, \link{standardiseCellCount}}
 }
 
 \examples{
 ## Loading the AMA2006 dataset:
 data(AMA2006)
 
-## Computing wood formation critical dates for firs and pines:
-Fir.cdd <- computeCriticalDates(AMA2006[AMA2006$Sp=="ABAL", ])
+## Computing wood formation critical dates for dominant firs and pines:
+Fir.cdd <- computeCriticalDates(AMA2006[AMA2006$Sp=="ABAL" & AMA2006$Crown=="Dom", ])
 Pine.cdd <- computeCriticalDates(AMA2006[AMA2006$Sp=="PISY", ])
 
 # Computing medians and medians absolute deviation for firs critical dates and durations
@@ -80,16 +79,16 @@ layout(matrix(c(1, 2, 3, 4), nrow=2, ncol=2, byrow=TRUE))
 par(mar=c(4, 4, 4, 1))
 
 # Drawing the first plot - Firs critical dates
-plotWoodFormationCalendar(Fir.cdd, xmin=100, xmax=305, subtitle="a. Fir critical dates", plotype=2)
+plotWoodFormationCalendar(Fir.cdd, xlim= c(100,305) , sub="a. Fir critical dates", plotype=2)
 
 # Drawing the second plot - Firs critical durations
-plotWoodFormationCalendar(Fir.cdd, xmax=210, subtitle="b. Fir critical durations", plotype=3)
+plotWoodFormationCalendar(Fir.cdd, xlim= c(100, 210), sub="b. Fir critical durations", plotype=3)
 
 # Drawing the third plot - Pines critical dates
-plotWoodFormationCalendar(Pine.cdd, xmin=100, xmax=305, subtitle="c. Pine critical dates", plotype=2)
+plotWoodFormationCalendar(Pine.cdd, xlim= c(100,305), sub="c. Pine critical dates", plotype=2)
 
 # Drawing the fourth plot - Pines critical durations
-plotWoodFormationCalendar(Pine.cdd, xmax=210, subtitle="d. Pine critical durations", plotype=3)
+plotWoodFormationCalendar(Pine.cdd, xlim= c(100, 210), sub="d. Pine critical durations", plotype=3)
 
 dev.off()
 }

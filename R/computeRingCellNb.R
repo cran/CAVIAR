@@ -7,10 +7,12 @@
 # Versions:
 #		1.0. Compute RCN, ICN, FCN
 #		1.1. Bug on RCN computation corrected
-#		1.2. adding se and mae
+#		1.2. Adding se and mae
+#		1.3. Modifying the function so it could work on raw or averaged cell count table
+#		1.4. Adding signal-to-noise ratio (SNR)
 #
 # Started: 25 March 2010
-# Last modified: 3 December 2010
+# Last modified: 27 January 2011
 #
 # **************************************************************************************
 
@@ -45,19 +47,19 @@ computeRingCellNb <- function(data, stat="median") {
 	# -----------------------------------------------------------------
 	# RCN
 	RCN1  <- DF[is.na(DF$nE) == FALSE & DF$nE < 0.1
-		& is.na(DF$nM) == FALSE & DF$nM >= 1, c("Tree", "DY", "RF", "nL", "nM")]
+		& is.na(DF$nM) == FALSE & DF$nM >= 1, c("Tree", "DY", "nL", "nM")]
 		
 	RCN1$nT <- RCN1$nL + RCN1$nM
 	RCN1$c <- 1
 	
 	# ICN
 	ICN1  <- DF[is.na(DF$nC) == FALSE & is.na(DF$nE) == FALSE & DF$nE < 0.1
-		& is.na(DF$nM) == FALSE & DF$nM < 0.1, c("Tree", "DY", "RF", "nC")]
+		& is.na(DF$nM) == FALSE & DF$nM < 0.1, c("Tree", "DY", "nC")]
 	ICN1$c <- 1
 	
 	# FCN
 	FCN1  <- DF[is.na(DF$nC) == FALSE & is.na(DF$nE) == FALSE & DF$nE < 0.1
-		& is.na(DF$nM) == FALSE & DF$nM > 1, c("Tree", "DY", "RF", "nC")]
+		& is.na(DF$nM) == FALSE & DF$nM > 1, c("Tree", "DY", "nC")]
 	FCN1$c <- 1	
 	
 	
@@ -82,8 +84,11 @@ computeRingCellNb <- function(data, stat="median") {
 		
 		RCN$RCN.se <- RCN$RCN.sd /sqrt(RCN$RCN.nb)
 		
+		RCN$SNR <- RCN$RCN.mean / RCN$RCN.sd
+		
 		RCN$RCN.sd <- round(RCN$RCN.sd, digits=1)
 		RCN$RCN.se <- round(RCN$RCN.se, digits=1)
+		RCN$SNR <- round(RCN$SNR, digits=1)
 	
 		# Computing the mean initial cambial cell number (ICN) and its variation for each tree
 		# ------------------------------------------------------------------------------------
@@ -149,8 +154,11 @@ computeRingCellNb <- function(data, stat="median") {
 		RCN$RCN.mae <- RCN$RCN.mad / sqrt(RCN$RCN.nb)
 		RCN$RCN.mae.normcor <- 3/4 * RCN$RCN.mae
 		
+		RCN$SNR <- RCN$RCN.median / RCN$RCN.mad
+		
 		RCN$RCN.mae <- round(RCN$RCN.mae, digits=1)
 		RCN$RCN.mae.normcor  <- round(RCN$RCN.mae.normcor, digits=1)
+		RCN$SNR <- round(RCN$SNR, digits=1)
 		
 	
 		# Computing the initial cambial cell number (ICN) for each tree

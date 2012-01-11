@@ -1,8 +1,9 @@
 citHeader("To cite package 'CAVIAR' in publications use:")
 
-desc <- packageDescription("CAVIAR")
-year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", desc$Date)
-vers <- paste("R package version", desc$Version)
+if(!exists("meta") || is.null(meta))  meta <- packageDescription("CAVIAR")
+#year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date)
+year <- substr(meta$Date, 1, 4)
+vers <- paste("R package version", meta$Version)
 
 citEntry(entry="Manual",
          title = "CAVIAR: cambial activity and wood formation - data manipulation, visualisation and analysis using R",
@@ -13,13 +14,13 @@ citEntry(entry="Manual",
 	)
 
 citEntry(entry="Article",
-         title        = "Phenology of wood formation: data processing, analysis and visualisation using R (CAVIAR package)",
+         title        = "Phenology of wood formation: Data processing, analysis and visualisation using R (Package CAVIAR)",
          author       = "Rathgeber C.B.K., Longuetaud F., Mothe F., Cuny H. & Le Moguedec G.",
-         year         = "In Press",
+         year         = 2011,
          journal      = "Dendrochronologia",
-         volume       = "xx",
-         pages        = "xxx-xxx",
-         textVersion = paste("Rathgeber C.B.K., Longuetaud F., Mothe F., Cuny H. & Le Moguedec G. Phenology of wood formation: data 			processing, analysis and visualisation using R (package CAVIAR). Accepted in Dendrochronologia.")
-         )
+         volume       = "29",
+         pages        = "139-149",
+         textVersion = paste("Rathgeber C.B.K., Longuetaud F., Mothe F., Cuny H. & Le Moguedec G. (2011) Phenology of wood formation: data processing, analysis and visualisation using R. Dendrochronologia 29:139-149.")
+)
 
-citFooter("We have invested a lot of time and effort in creating this package so please cite it properly when using it for data processing, visualisation or analysis.")
+citFooter("We have invested a lot of time and efforts in creating this package so please cite it properly when using it for data manipulation, visualisation or analysis.")

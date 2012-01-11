@@ -45,9 +45,9 @@ Additionally it computes characteristic biological parameters.
 }
 
 \note{
-Version: 2.0-0 \cr
+Version: 2.1-1 \cr
 Development started: 27 November 2008
-Last modifications: 6 Decembre 2010
+Last modifications: 27 January 2011
 }
 
 \author{
@@ -56,25 +56,25 @@ Email: \email{cyrille.rathgeber@nancy.inra.fr}
 }
 
 \references{
-Rathgeber C.B.K., Rossi S. , Bontemps J.-D. Influence of social status on intra-annual dynamics of xylem cell production in a silver fir plantation. In preparation.
+Rathgeber C.B.K., Rossi S.& Bontemps J.-D. 2011. Cambial activity related to tree size in a mature silver-fir plantation. \emph{Annals of Botany} \bold{108}: 429-438.
 }
 
 \seealso{
-\code{\link{AMA2006}, \link{averageRadialFiles}, \link{computeBootstrapTest}, \link{computeCriticalDates}, \link{computeRingCellNb}, \link{readXLSCellCountTable}, \link{plotWoodFormationCalendar}, \link{plotWoodFormationDynamics}}
+\code{\link{AMA2006}, \link{averageRadialFiles}, \link{computeBootstrapTest}, \link{computeCriticalDates}, \link{computeRingCellNb}, \link{readXLSCellCountTable}, \link{plotWoodFormationCalendar}, \link{plotWoodFormationDynamics}, \link{standardiseCellCount}}
 }
 
 \examples{
 ## Loading the example dataset:
 data(AMA2006)
 
-## Averaging radial files
-DF <- averageRadialFiles(AMA2006)
+## Averaging radial files for dominant firs
+DF <- averageRadialFiles(AMA2006[AMA2006$Sp=="ABAL" & AMA2006$Crown=="Dom", ])
 
 ## Fitting Gompertz
 R1 <- fitGompertz(data=DF, plot.fitting=TRUE, ttl="", lblx="Date", lbly="Total cumulated cell number", plot.OP=TRUE)
 
 ## Compute the ring cell number to constrain the asymptote of the Gompertz
-RCN <- computeRingCellNb(AMA2006, stat="median")
+RCN <- computeRingCellNb(DF, stat="median")
 
 asymp <- RCN[, c("Tree", "RCN.median")]
 names(asymp) <- c("Tree", "A")

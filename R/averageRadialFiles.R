@@ -1,4 +1,3 @@
-
 averageRadialFiles <- function(data) {
 
  # *************************************************************************************
@@ -15,8 +14,8 @@ averageRadialFiles <- function(data) {
  #		dataframe of averaged values
  #
  # Version: 2.1-0
- # Started: 27 November 2008
- # Last modifications: 19 October 2010
+ # Development started: 27 November 2008
+ # Last modifications: 25 January 2011
  # *************************************************************************************
 
 	IDF <- data
@@ -24,10 +23,10 @@ averageRadialFiles <- function(data) {
 	N <- names(IDF)
 	
 	
-	# Case 1: database with no "Sample" and no "nP"
+	# Case 1: database with no "Sample" and no "P"
 	# -------------------------------------------------------
 	
-	if (is.na(match("Sample", N)) == TRUE & is.na(match("nP", N)) == TRUE) {
+	if (is.na(match("Sample", N)) == TRUE & is.na(match("P", N)) == TRUE) {
 	
 		# Converting Tree and DY as factors
 		# ---------------------------------
@@ -61,10 +60,10 @@ averageRadialFiles <- function(data) {
 	} # End if
 	
 	
-	# Case 2: database with "Sample" but no "nP"
+	# Case 2: database with "Sample" but no "P"
 	# -------------------------------------------------------
 	
-	if (is.na(match("Sample", N)) == FALSE & is.na(match("nP", N)) == TRUE) {
+	if (is.na(match("Sample", N)) == FALSE & is.na(match("P", N)) == TRUE) {
 	
 		# Converting Tree and DY as factors
 		# ---------------------------------
@@ -99,10 +98,10 @@ averageRadialFiles <- function(data) {
 	} # End if
 	
 	
-	# Case 3: database with no "Sample" but "nP"
+	# Case 3: database with no "Sample" but "P"
 	# -------------------------------------------------------
 	
-	if (is.na(match("Sample", N)) == TRUE & is.na(match("nP", N)) == FALSE) {
+	if (is.na(match("Sample", N)) == TRUE & is.na(match("P", N)) == FALSE) {
 	
 		# Converting Tree and DY as factors
 		# ---------------------------------
@@ -111,9 +110,9 @@ averageRadialFiles <- function(data) {
 
 		# Creating a new aggregated dataframe by radial files
 		# ---------------------------------------------------
-		ODF <- aggregate(IDF[, c("nC", "nE", "nL", "nM", "nP")],
+		ODF <- aggregate(IDF[, c("nC", "nE", "nL", "nM", "P")],
 			by=list(IDF$Tree, IDF$DY), FUN=mean, na.rm=TRUE)
-		names(ODF) <- c("Tree", "DY", "nC", "nE", "nL", "nM", "nP")
+		names(ODF) <- c("Tree", "DY", "nC", "nE", "nL", "nM", "P")
 	
 		# Ordering the new aggregated data frame
 		# --------------------------------------
@@ -131,15 +130,17 @@ averageRadialFiles <- function(data) {
 
 		# Rounding values
 		# ---------------
-		ODF[, c("nC", "nE", "nL", "nM", "nP", "nLM", "nELM")] <- round(ODF[, 
-			c("nC", "nE", "nL", "nM", "nP", "nLM", "nELM")], digits=1)
+		ODF[, c("nC", "nE", "nL", "nM", "nLM", "nELM", "P")] <- round(ODF[, 
+			c("nC", "nE", "nL", "nM", "nLM", "nELM", "P")], digits=1)
+		
+		ODF <- ODF[, c("Tree", "DY", "nC", "nE", "nL", "nM", "nLM", "nELM", "P")]
 	} # End if
 	
 	
-	# Case 4: database with "Sample" but no "nP"
+	# Case 4: database with "Sample" and "P"
 	# -------------------------------------------------------
 	
-	if (is.na(match("Sample", N)) == FALSE & is.na(match("nP", N)) == FALSE) {
+	if (is.na(match("Sample", N)) == FALSE & is.na(match("P", N)) == FALSE) {
 	
 		# Converting Tree and DY as factors
 		# ---------------------------------
@@ -149,9 +150,9 @@ averageRadialFiles <- function(data) {
 
 		# Creating a new aggregated dataframe by radial files
 		# ---------------------------------------------------
-		ODF <- aggregate(IDF[, c("nC", "nE", "nL", "nM", "nP")],
+		ODF <- aggregate(IDF[, c("nC", "nE", "nL", "nM", "P")],
 			by=list(IDF$Tree, IDF$Sample, IDF$DY), FUN=mean, na.rm=TRUE)
-		names(ODF) <- c("Tree", "Sample", "DY", "nC", "nE", "nL", "nM", "nP")
+		names(ODF) <- c("Tree", "Sample", "DY", "nC", "nE", "nL", "nM", "P")
 	
 		# Ordering the new aggregated data frame
 		# --------------------------------------
@@ -169,8 +170,10 @@ averageRadialFiles <- function(data) {
 
 		# Rounding values
 		# ---------------
-		ODF[, c("nC", "nE", "nL", "nM", "nP", "nLM", "nELM")] <- round(ODF[, 
-			c("nC", "nE", "nL", "nM", "nP", "nLM", "nELM")], digits=1)
+		ODF[, c("nC", "nE", "nL", "nM", "P", "nLM", "nELM")] <- round(ODF[, 
+			c("nC", "nE", "nL", "nM", "P", "nLM", "nELM")], digits=1)
+			
+		ODF <- ODF[, c("Tree", "Sample", "DY", "nC", "nE", "nL", "nM", "nLM", "nELM", "P")]
 	} # End if
 	
 	
@@ -178,5 +181,4 @@ averageRadialFiles <- function(data) {
 	# --------------------------
 	return(ODF)
 	
-} # End function averageRF
-
+} # End function averageRadialFiles

@@ -1,5 +1,4 @@
-
-plotWoodFormationCalendar <- function(data, xmin=NA, xmax=NA, title=" ", subtitle=" ", plotype=4) {
+plotWoodFormationCalendar <- function(data, main=" ", sub=" ", xlim=NULL, plotype=4) {
 
  # *********************************************************************************************
  # plotWoodFormationCalendar() function definition
@@ -10,14 +9,13 @@ plotWoodFormationCalendar <- function(data, xmin=NA, xmax=NA, title=" ", subtitl
  # Arguments:
  # 		- data: data.frame with imposed column names, typically output from computeCriticalDates()
  #			function
- #		- xmin (optional): x-axis min value
- #		- xmax (optional): x-axis max value
- #		- title (optional): plot tittle
- #		- subtitle (optional): plot subtittle
+  #		- main (optional): plot tittle
+ #		- sub (optional): plot subtittle
+ #		- xlim (optional): vector indicating x-axis min and max values
  #		- plotype (optional): 	type 1 --> individual critical dates plot
- #									type 2 --> goup critical dates plot
- #									type 3 --> goup critical duration plot
- #									type 4 --> goup critical dates & duration plot
+ #								type 2 --> goup critical dates plot
+ #								type 3 --> goup critical duration plot
+ #								type 4 --> goup critical dates & duration plot
  #
  # Output:
  #		- plot
@@ -28,22 +26,35 @@ plotWoodFormationCalendar <- function(data, xmin=NA, xmax=NA, title=" ", subtitl
  #		2. plot group critical dates
  #		3. plot group phases durations
  #		4. Compute median and inter-quartile range
+ #			4.1. Modifying presentation of maature phase and missing values (15/12/2011)
+ #			4.2. Changing title name argument for main (01/01/2012)
  # Started: 7 Juillet 2009
- # Last modifications: 11 February 2010
+ # Last modifications: 01 January 2010
  # Author: Cyrille RATHGEBER - INRA Nancy
  #
  # *********************************************************************************************
 	
 	DF <- data
-	
+	DFa  <- data
+	DFl <- is.na(DF)	
+
 	# Months characteristics
 	MonthId <- c("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D")
 	FirstDay <- c(1, 32, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335)
 	MiddleDay <- c(16, 45, 75, 105, 136, 166, 197, 228, 258, 289, 319, 350)
 	
 	# x-axis range
-	if (is.na(xmin) == TRUE) xmin <- min(DF$bE, na.rm=TRUE)
-	if (is.na(xmax) == TRUE) xmax <- max(DF$cL, na.rm=TRUE)
+	if (is.null(xlim) == TRUE) xlim <- c(min(DF$bE, na.rm=TRUE), max(DF$cL, na.rm=TRUE))
+
+	
+	# Replacing NA by min or max
+	# ---------------------------
+	DFa$bE <- ifelse(is.na(DF$bE), 0, DF$bE)
+	DFa$bL <- ifelse(is.na(DF$bL), 0, DF$bL)
+	DFa$bM <- ifelse(is.na(DF$bM), 0, DF$bM)
+	DFa$cE <- ifelse(is.na(DF$cE), 400, DF$cE)
+	DFa$cL <- ifelse(is.na(DF$cL), 400, DF$cL)
+	
 	
 	# Associated functions
 	# --------------------
@@ -111,7 +122,7 @@ plotWoodFormationCalendar <- function(data, xmin=NA, xmax=NA, title=" ", subtitl
 		YTicks <- c(1, 2, 3, 4, 6, 7, 8, 9, 11, 12, 13, 14, 16, 17, 18, 19, 21, 22, 23, 24)
 		YLabs <- rep(c("M", "L", "E", "D"), times=5)
 
-		plot(0, 0, xlim=c(xmin, xmax), ylim=c(ymin, ymax), type="n", ann=FALSE, axes=FALSE)
+		plot(0, 0, xlim=xlim, ylim=c(ymin, ymax), type="n", ann=FALSE, axes=FALSE)
 
 
 		# Plotting the phases for the 5 trees
@@ -123,28 +134,50 @@ plotWoodFormationCalendar <- function(data, xmin=NA, xmax=NA, title=" ", subtitl
 		
 			# Dividing Phase (C)
 			y <- TreePosition + 4
-			if (length(DF$bD) > 0 && length(DF$cD) > 0) {
-				plotPlayMarks(DF$bD[i], y, DF$bD.sd[i], dir="left", col="green")
-				plotPlayMarks(DF$cD[i], y, DF$cD.sd[i], dir="right", col="green")
-				lines(c(DF$bD[i], DF$cD[i]), c(y, y), col="green", lwd=lw)
+			if (length(DFa$bD) > 0 && length(DFa$cD) > 0) {
+				plotPlayMarks(DFa$bD[i], y, DFa$bD.sd[i], dir="left", col="green")
+				plotPlayMarks(DFa$cD[i], y, DFa$cD.sd[i], dir="right", col="green")
+				lines(c(DFa$bD[i], DFa$cD[i]), c(y, y), col="green", lwd=lw)
 			}
 
 	
 			# Expansion Phase (E)
 			y <- TreePosition + 3
-			plotPlayMarks(DF$bE[i], y, DF$bE.sd[i], dir="left", col="blue")
-			plotPlayMarks(DF$cE[i], y, DF$cE.sd[i], dir="right", col="blue")
-			lines(c(DF$bE[i], DF$cE[i]), c(y, y), col="blue", lwd=lw)
+			plotPlayMarks(DFa$bE[i], y, DFa$bE.sd[i], dir="left", col="blue")
+			plotPlayMarks(DFa$cE[i], y, DFa$cE.sd[i], dir="right", col="blue")
+			if ( DFl[i, "bE"] == TRUE | DFl[i, "cE"] == TRUE) {
+				X <- seq(DFa$bE[i]+10, DFa$cE[i]-10, 10)
+				Y <- rep(y, length(X))
+				points(X, Y, pch=3, col="blue")
+			}
+			else {
+				lines(c(DFa$bE[i], DFa$cE[i]), c(y, y), col="blue", lwd=lw)
+			}
 		
 			# Maturing Phase (L)
 			y <- TreePosition + 2
-			plotPlayMarks(DF$bL[i], y, DF$bL.sd[i], dir="left", col="red")
-			plotPlayMarks(DF$cL[i], y, DF$cL.sd[i], dir="right", col="red")
-			lines(c(DF$bL[i], DF$cL[i]), c(y, y), col="red", lwd=lw)
+			plotPlayMarks(DFa$bL[i], y, DFa$bL.sd[i], dir="left", col="red")
+			plotPlayMarks(DFa$cL[i], y, DFa$cL.sd[i], dir="right", col="red")
+			if ( DFl[i, "bL"] == TRUE | DFl[i, "cL"] == TRUE) {
+				X <- seq(DFa$bL[i]+10, DFa$cL[i]-10, 10)
+				Y <- rep(y, length(X))
+				points(X, Y, pch=3, col="red")
+			}
+			else {
+				lines(c(DFa$bL[i], DFa$cL[i]), c(y, y), col="red", lwd=lw)
+			}
 
 			# Mature phase (M)
 			y <- TreePosition + 1
-			plotPlayMarks(DF$bM[i], y, DF$bM.sd[i], dir="left", col="brown")
+			if (DFl[i, "bM"] == TRUE) {
+				X <- seq(DFa$bM[i]+10, 400, 10)
+				Y <- rep(y, length(X))
+				points(X, Y, pch=3, col="brown")
+			}
+			else {	
+				plotPlayMarks(DFa$bM[i], y, DFa$bM.sd[i], dir="left", col="brown")	
+			}
+			
 		}
 
 		# Customising axes 1
@@ -168,8 +201,8 @@ plotWoodFormationCalendar <- function(data, xmin=NA, xmax=NA, title=" ", subtitl
 
 		# Writting additionnal labels on the plot
 
-		mtext(paste(title), side=3, line=2.5, adj=0, cex=1.25)
-		mtext(paste(paste(subtitle)), side=3, line=1.5, adj=0, cex=1)
+		mtext(paste(main), side=3, line=2.5, adj=0, cex=1.25)
+		mtext(paste(paste(sub)), side=3, line=1.5, adj=0, cex=1)
 		mtext(paste("Onset"), side=3, line=0.5, adj=0.05, cex=1)
 		mtext(paste("Cessation"), side=3, line=0.5, adj=0.95, cex=1)
 
@@ -188,7 +221,7 @@ plotWoodFormationCalendar <- function(data, xmin=NA, xmax=NA, title=" ", subtitl
 		ymin <- 0
 		ymax <- 4
 
-		plot(0, 0, xlim=c(xmin, xmax), ylim=c(ymin, ymax), type="n", ann=FALSE, axes=FALSE)
+		plot(0, 0, xlim=xlim, ylim=c(ymin, ymax), type="n", ann=FALSE, axes=FALSE)
 
 		# Drawing separation between month
 		for (i in 1:12) {
@@ -222,8 +255,8 @@ plotWoodFormationCalendar <- function(data, xmin=NA, xmax=NA, title=" ", subtitl
 		mtext("Phases", side=2, line=2, adj=0.5, cex=1)
 	
 		# Writting additionnal labels on the plot
-		mtext(paste(title), side=3, line=2.5, adj=0, cex=1.25)
-		mtext(paste(paste(subtitle)), side=3, line=1, adj=0, cex=1)
+		mtext(paste(main), side=3, line=2.5, adj=0, cex=1.25)
+		mtext(paste(paste(sub)), side=3, line=1, adj=0, cex=1)
 		mtext(paste("Onset"), side=3, line=-1.5, adj=0.05, cex=1)
 		mtext(paste("Cessation"), side=3, line=-1.5, adj=0.95, cex=1)
 
@@ -241,9 +274,8 @@ plotWoodFormationCalendar <- function(data, xmin=NA, xmax=NA, title=" ", subtitl
 		YTicks <- c(1, 2, 3)
 		ymax <- 4
 	
-		if (xmax==-1) xmax <- max(DF$dX) + 10
 
-		plot(0, 0, xlim=c(xmin, xmax), ylim=c(0, ymax), type="n", ann=FALSE, axes=FALSE)
+		plot(0, 0, xlim=xlim, ylim=c(0, ymax), type="n", ann=FALSE, axes=FALSE)
 
 		# Drawing vertical lines
 		abline(v=c(0, 50, 100, 150, 200, 250, 300, 350), lty=3)
@@ -272,8 +304,8 @@ plotWoodFormationCalendar <- function(data, xmin=NA, xmax=NA, title=" ", subtitl
 		mtext("Phases", side=2, line=2, adj=0.5, cex=1)
 
 		# Writting additionnal labels
-		mtext(title, side=3, line=2.5, adj=0, cex=1.25)
-		mtext(subtitle, side=3, line=1, adj=0, cex=1)
+		mtext(main, side=3, line=2.5, adj=0, cex=1.25)
+		mtext(sub, side=3, line=1, adj=0, cex=1)
 
 		box()	
 	}
@@ -296,3 +328,4 @@ plotWoodFormationCalendar <- function(data, xmin=NA, xmax=NA, title=" ", subtitl
 	return(ODF)
 
 } # End plotWoodCalendar function
+# *********************************************************************************************

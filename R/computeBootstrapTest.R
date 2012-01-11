@@ -1,6 +1,8 @@
 # *************************************************************************************
-# Cyrille RATHGEBER - INRA Nancy - 14 July to 15 September 2009, 9 & 11 February 2010
+# Cyrille RATHGEBER - INRA Nancy
 # Purpose -> Testing if critical dates or durations are different between groups or not
+# Development started: 14 July 2009
+# Last modifications: 11 February 2011
 # Versions:
 # 		1. Two sample bootstrap test
 #     	2. Test on median

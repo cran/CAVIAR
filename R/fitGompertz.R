@@ -20,18 +20,18 @@ fitGompertz <- function(data, asymptote=NULL,
  # Output:
  #		data.frames of values
  #
- # Version: 2.0-0
+ # Version: 2.1-1
  # Started: 27 November 2008
- # Last modifications: 6 Decembre 2010
+ # Last modifications: 27 Janvier 2010
  # *************************************************************************************
 
 	DF  <-  data
-	DF$Tree <- as.factor(DF$Tree)
+	DF$Tree <- ordered(as.character(DF$Tree))
 	
 	# Initialising objects
 	Results <- data.frame()
 	
-	for (t in 1:nlevels(DF$Tree)) {
+	for (t in levels(DF$Tree)) {
 		D <- DF$DY[DF$Tree==t]
 		N <- DF$nELM[DF$Tree==t]
 		
@@ -100,7 +100,8 @@ fitGompertz <- function(data, asymptote=NULL,
 		
 		# Recording the results of the fitting
 		# ------------------------------------
-		R <- c(t, a, b, k, t5, tip, t95, Dt90, rmax, r90, R2, EF, RMSD)
+		index <- as.numeric(t)
+		R <- c(index, a, b, k, t5, tip, t95, Dt90, rmax, r90, R2, EF, RMSD)
 		Results <- rbind(Results, R)
 	
 	

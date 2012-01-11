@@ -57,8 +57,9 @@ Dispersion is not implemented for tests based on centred statistics (\option{cen
 }
 
 \note{
-Version: 4.0 \cr
-Last modifications: 19 July 2010
+Version: 4.1-1 \cr
+Development started: 14 July 2009 \cr
+Last modifications: 11 February 2011
 }
 
 \author{
@@ -67,26 +68,26 @@ Email: \email{cyrille.rathgeber@nancy.inra.fr}
 }
 
 \references{
-Rathgeber C.B.K., Longuetaud F. , Mothe F., Cuny H., Le Moguedec G. 2010. Phenology of wood formation: data processing, analysis and visualisation using R. Accepted in \emph{Dendrochronologia}.
+Rathgeber C.B.K., Longuetaud F., Mothe F., Cuny H. & Le Moguedec G. 2011. Phenology of wood formation: Data processing, analysis and visualisation using R (Package CAVIAR).  \emph{Dendrochronologia} \bold{29}: 139-149. \cr
 }
 
 \seealso{
-\code{\link{AMA2006}, \link{averageRadialFiles}, \link{computeCriticalDates}, \link{computeRingCellNb}, \link{readXLSCellCountTable}, \link{fitGompertz}, \link{plotWoodFormationCalendar}, \link{plotWoodFormationDynamics}}
+\code{\link{AMA2006}, \link{averageRadialFiles}, \link{computeCriticalDates}, \link{computeRingCellNb}, \link{readXLSCellCountTable}, \link{fitGompertz}, \link{plotWoodFormationCalendar}, \link{plotWoodFormationDynamics}, \link{standardiseCellCount}}
 }
 
 \examples{
 ## Loading the example dataset:
 data(AMA2006)
 
-## Computing wood formation critical dates for firs and pines:
-Fir.cdd <- computeCriticalDates(AMA2006[AMA2006$Sp=="ABAL", ])
+## Computing wood formation critical dates for dominant firs and pines:
+Fir.cdd <- computeCriticalDates(AMA2006[AMA2006$Sp=="ABAL" & AMA2006$Crown=="Dom", ])
 Pine.cdd <- computeCriticalDates(AMA2006[AMA2006$Sp=="PISY", ])
 
 ## Testing if pines start xylogenesis before firs
-computeBootstrapTest(Fir.cdd$bE, Pine.cdd$bE)
+#computeBootstrapTest(Fir.cdd$bE, Pine.cdd$bE)
 
 ## Testing if pines start xylogenesis before firs with taking dispersion into account
-computeBootstrapTest(Fir.cdd$bE, Pine.cdd$bE, Fir.cdd$bE.sd, Pine.cdd$bE.sd)
+#computeBootstrapTest(Fir.cdd$bE, Pine.cdd$bE, Fir.cdd$bE.sd, Pine.cdd$bE.sd)
 }
 
 \keyword{htest}

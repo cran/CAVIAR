@@ -1,5 +1,5 @@
 
-plotWoodFormationDynamics <- function(data, title=" ", x.axis.labels="DOY", wrap=FALSE) {
+plotWoodFormationDynamics <- function(data, main=" ", sub=" ",x.axis.labels="DOY", wrap=FALSE) {
 
  # *******************************************************************************************************
  # plotWoodFormationDynamics() function definition
@@ -9,16 +9,20 @@ plotWoodFormationDynamics <- function(data, title=" ", x.axis.labels="DOY", wrap
  # 
  # Arguments:
  # 		- data: data.frame with imposed column names, typically output from averageRF() function
- #		- title (optional): plot tittle
- #		- x.axis.labels: a character for selecting between day of year (DOY, default) or Sample number (Sample)
+ #		- main (optional): plot title
+ #		- sub (optional): plot sub-title
+ #		- x.axis.labels: a character for selecting between day of year (DOY, default) or Sample number
+ #              (Sample)
  #		- wrap (optional): draws an enveloppe around the main curve if TRUE
  #
  # Output:
  #		- plot
  #
- # Version: 1.1-1
+ # Version 4.1
+ #		4. Draw envelope around the main curve
+ #			4.1. Changing title name argument for main (01/01/2011)
  # Started: 10 Jully 2009
- # Last modifications: 4 November 2010
+ # Last modifications: 3 January 2012
  # Author: Cyrille RATHGEBER - INRA Nancy
  #
  # *******************************************************************************************************
@@ -75,7 +79,8 @@ plotWoodFormationDynamics <- function(data, title=" ", x.axis.labels="DOY", wrap
 	mtext("Number of cells", side=2, line=2.5)
 
 	# Writting plot title
-	mtext(title, side=3, line=2, adj=0.0, cex=1.25)
+	mtext(main, side=3, line=2.5, adj=0.0, cex=1.25)
+	mtext(sub, side=3, line=1.5, adj=0.0, cex=1)
 	
 	# Legend
 	xmin <- min(DF$DY)

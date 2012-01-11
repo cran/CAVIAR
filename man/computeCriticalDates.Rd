@@ -30,8 +30,9 @@ This data frame is composed of 5 columns for the critical dates, which are the b
 }
 
 \note{
-Version: 4.0 \cr
-Last modifications: 19 July 2010
+Version: 4.1-1 \cr
+Development started: 21 October 2009 \cr
+Last modifications: 21 December 2012
 }
 
 \author{
@@ -40,19 +41,21 @@ Email: \email{cyrille.rathgeber@nancy.inra.fr}
 }
 
 \references{
-Rathgeber C.B.K., Longuetaud F. , Mothe F., Cuny H., Le Moguedec G. 2010. Phenology of wood formation: data processing, analysis and visualisation using R. Accepted in \emph{Dendrochronologia}.
+Rathgeber C.B.K., Longuetaud F., Mothe F., Cuny H. & Le Moguedec G. 2011. Phenology of wood formation: Data processing, analysis and visualisation using R (Package CAVIAR).  \emph{Dendrochronologia} \bold{29}: 139-149. \cr
+
+Rathgeber C.B.K., Rossi S.& Bontemps J.-D. 2011. Cambial activity related to tree size in a mature silver-fir plantation. \emph{Annals of Botany} \bold{108}: 429-438.
 }
 
 \seealso{
-\code{\link{AMA2006}, \link{averageRadialFiles}, \link{computeBootstrapTest}, \link{computeRingCellNb}, \link{readXLSCellCountTable}, \link{fitGompertz}, \link{plotWoodFormationCalendar}, \link{plotWoodFormationDynamics}}
+\code{\link{AMA2006}, \link{averageRadialFiles}, \link{computeBootstrapTest}, \link{computeRingCellNb}, \link{readXLSCellCountTable}, \link{fitGompertz}, \link{plotWoodFormationCalendar}, \link{plotWoodFormationDynamics}, \link{standardiseCellCount}}
 }
 
 \examples{
 ## Loading the example dataset:
 data(AMA2006)
 
-## Computing wood formation critical dates and durations for firs and pines:
-Fir.cdd <- computeCriticalDates(AMA2006[AMA2006$Sp=="ABAL", ])
+## Computing wood formation critical dates and durations for dominant firs and pines:
+Fir.cdd <- computeCriticalDates(AMA2006[AMA2006$Sp=="ABAL" & AMA2006$Crown=="Dom", ])
 Pine.cdd <- computeCriticalDates(AMA2006[AMA2006$Sp=="PISY", ])
 }
 
